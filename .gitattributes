@@ -1,0 +1,13 @@
+# Git does not enforce file size limits; hosts (e.g. GitHub) reject blobs ~>100 MB.
+# Use Git LFS for large tracked binaries: install once per clone with `git lfs install`.
+#
+# After installing Git LFS, uncomment the following so .bank files (and similar) are
+# stored as LFS pointers instead of huge Git blobs. Push will still fail if a file
+# was committed before LFS — use `git lfs migrate import` or history rewrite in that case.
+#
+# *.bank filter=lfs diff=lfs merge=lfs -text
+# *.strings.bank filter=lfs diff=lfs merge=lfs -text
+
+# Line endings: prefer Unity/FMOD binary assets stay binary (no CRLF “corruption”)
+*.bank binary
+*.strings.bank binary
