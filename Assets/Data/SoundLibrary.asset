@@ -32,8 +32,8 @@ MonoBehaviour:
   - Key: sound2
     Event:
       Guid:
-        Data1: 1809615387
-        Data2: 1076786435
-        Data3: -649168739
-        Data4: -278176312
+        Data1: -2076731273
+        Data2: 1316901275
+        Data3: -618647116
+        Data4: 1288422821
       Path: event:/soundTest 2
