@@ -29,3 +29,11 @@ MonoBehaviour:
         Data3: 394763428
         Data4: 364190684
       Path: event:/soundTest
+  - Key: sound2
+    Event:
+      Guid:
+        Data1: 1809615387
+        Data2: 1076786435
+        Data3: -649168739
+        Data4: -278176312
+      Path: event:/soundTest 2
