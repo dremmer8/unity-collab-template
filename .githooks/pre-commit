@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Reject commits that would add/update blobs larger than MAX_FILE_BYTES.
+# .gitignore cannot filter by size; this hook enforces a hard cap before commit.
+#
+# Enable for this clone (run once per machine / clone):
+#   git config core.hooksPath .githooks
+#
+# Optional: stricter limit for one commit:
+#   MAX_FILE_BYTES=$((50 * 1024 * 1024)) git commit ...
+
+set -euo pipefail
+
+MAX_BYTES="${MAX_FILE_BYTES:-$((100 * 1024 * 1024))}"
+
+while IFS= read -r path; do
+  [[ -z "$path" ]] && continue
+  oid="$(git ls-files --stage -- "$path" | awk 'NR==1 {print $2}')"
+  [[ -z "$oid" ]] && continue
+  size="$(git cat-file -s "$oid")"
+  if (( size > MAX_BYTES )); then
+    echo "error: staged file exceeds byte limit (${MAX_BYTES}): '$path' ($(printf '%s' "$size") bytes)." >&2
+    echo "Fix: add a .gitignore rule, use Git LFS (see .gitattributes), or remove from the index." >&2
+    exit 1
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACM)
+
+exit 0
